@@ -1,0 +1,13 @@
+<Project>
+	<PropertyGroup>
+		<PackageOutputPath>../../nuget-packages</PackageOutputPath>
+		<Authors>Nick Polyderopoulos</Authors>
+		<Company>Nick Polyderopoulos</Company>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<RepositoryType>git</RepositoryType>
+		<Copyright>Copyright (c) $([System.DateTime]::Now.Year.ToString()) Nick Polyderopoulos</Copyright>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+</Project>

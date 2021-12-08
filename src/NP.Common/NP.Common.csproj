@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+	  <Version>0.5.0</Version>
+	  <Product>NP.Common</Product>
+	  <Description>A .net library with common and code.</Description>
+	  <PackageProjectUrl>https://github.com/NickPolyder/NP.Common</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/NickPolyder/NP.Common</RepositoryUrl>
+	  <PackageTags>common,code,tools</PackageTags>
+	  <PackageReleaseNotes>
+	  </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <None Include="..\..\LICENSE">
+		  <Pack>True</Pack>
+		  <PackagePath></PackagePath>
+	  </None>
+  </ItemGroup>
+
+</Project>
