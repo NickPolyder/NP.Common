@@ -33,5 +33,16 @@ namespace NP.Common.Extensions
 														 || item.IsGenericType
 															 && item.GetGenericTypeDefinition() == interfaceType);
 		}
+
+		/// <summary>
+		/// Is this type a <see cref="Nullable{T}"/> ?
+		/// </summary>
+		/// <param name="thisType"></param>
+		/// <returns></returns>
+		public static bool IsNullable(this Type @thisType)
+		{
+			return @thisType.IsGenericType
+				&& @thisType.GetGenericTypeDefinition() == typeof(Nullable<>);
+		}
 	}
 }
