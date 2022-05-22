@@ -1,4 +1,4 @@
-name: Dev
+name: Release
 
 on: workflow_dispatch
 
@@ -25,10 +25,5 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-    - name: Remove github source
-      run: dotnet nuget remove source github
-      continue-on-error: true
-    - name: Add github source
-      run:  dotnet nuget add source --username NickPolyder --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/NickPolyder/index.json"
     - name: Publish Nuget
-      run: dotnet nuget push "nuget-packages/*.nupkg"  --api-key ${{ secrets.GITHUB_TOKEN }} --source "github" --skip-duplicate
+      run: dotnet nuget push "nuget-packages/*.nupkg"  --api-key ${{ secrets.NUGET_API_TOKEN }} --source "nuget.org" --skip-duplicate
