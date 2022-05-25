@@ -61,6 +61,7 @@
 		/// <param name="right"></param>
 		public static implicit operator OR<T1, T2>(T2 right) => new OR<T1, T2>(right);
 	}
+
 	/// <summary>
 	/// A class providing three optional values.
 	/// </summary>
