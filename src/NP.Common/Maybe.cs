@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace NP.Common
 {
@@ -7,7 +8,8 @@ namespace NP.Common
 	///  <see cref="Maybe{T}"/> works as <see cref="Nullable{T}"/> but for both classes and structs.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class Maybe<T> : IEquatable<Maybe<T>>
+	[Serializable]
+	public class Maybe<T> : IEquatable<Maybe<T>>, ISerializable
 	{
 		/// <summary>
 		/// Has a value ?
@@ -113,5 +115,31 @@ namespace NP.Common
 		{
 			return !Equals(left, right);
 		}
+
+		#region Serialization
+
+		/// <summary>
+		/// Serialization Constructor
+		/// </summary>
+		/// <param name="info"></param>
+		/// <param name="context"></param>
+		protected Maybe(SerializationInfo info, StreamingContext context)
+		{
+			HasValue = info.GetBoolean(nameof(HasValue));
+
+			if (info.GetValue(nameof(Value), typeof(T)) is T data)
+			{
+				Value = data;
+			}
+		}
+
+		/// <inheritdoc />
+		public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue(nameof(HasValue), HasValue);
+			info.AddValue(nameof(Value), Value, typeof(T));
+		}
+
+		#endregion
 	}
 }

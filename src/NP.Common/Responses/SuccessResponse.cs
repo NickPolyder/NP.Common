@@ -1,9 +1,13 @@
-﻿namespace NP.Common.Responses
+﻿using System;
+using System.Runtime.Serialization;
+
+namespace NP.Common.Responses
 {
 	/// <summary>
 	/// A successful response.
 	/// </summary>
-	public class SuccessResponse: IResponse
+	[Serializable]
+	public class SuccessResponse: IResponse, ISerializable
 	{
 		/// <inheritdoc cref="Message"/>
 		public string Message { get; }
@@ -28,8 +32,29 @@
 		/// <inheritdoc cref="CastTo{TData}"/>
 		public IResponse<TData> CastTo<TData>(Maybe<TData> data)
 		{
-			return new SuccessResponse<TData>(data);
+			return new SuccessResponse<TData>(Message, data);
 		}
+
+		#region Serialization
+		
+		/// <summary>
+		/// Serialization Constructor
+		/// </summary>
+		/// <param name="info"></param>
+		/// <param name="context"></param>
+		protected SuccessResponse(SerializationInfo info, StreamingContext context)
+		{
+			Message = info.GetString(nameof(Message));
+
+		}
+
+		/// <inheritdoc />
+		public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue(nameof(Message), Message);
+		}
+
+		#endregion
 	}
 
 	/// <summary>
@@ -72,5 +97,27 @@
 		{
 			Payload = payload;
 		}
+
+		#region Serialization
+
+		/// <summary>
+		/// Serialization Constructor
+		/// </summary>
+		/// <param name="info"></param>
+		/// <param name="context"></param>
+		protected SuccessResponse(SerializationInfo info, StreamingContext context): base(info, context)
+		{
+			Payload = info.GetValue(nameof(Payload), typeof(Maybe<TData>)) is Maybe<TData> data ? data : Maybe<TData>.Empty;
+		}
+
+		/// <inheritdoc />
+		public override void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			base.GetObjectData(info, context);
+
+			info.AddValue(nameof(Payload), Payload, typeof(Maybe<TData>));
+		}
+
+		#endregion
 	}
 }
