@@ -7,7 +7,7 @@ namespace NP.Common.Responses
 	/// A successful response.
 	/// </summary>
 	[Serializable]
-	public class SuccessResponse: IResponse, ISerializable
+	public class SuccessResponse: IResponse
 	{
 		/// <inheritdoc cref="Message"/>
 		public string Message { get; }

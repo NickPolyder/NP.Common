@@ -1,9 +1,11 @@
-﻿namespace NP.Common.Responses
+﻿using System.Runtime.Serialization;
+
+namespace NP.Common.Responses
 {
 	/// <summary>
 	/// A Contract for Responses.
 	/// </summary>
-	public interface IResponse
+	public interface IResponse: ISerializable
 	{
 		/// <summary>
 		/// Information about the response.

@@ -9,7 +9,7 @@ namespace NP.Common.Responses
 	/// 
 	/// </summary>
 	[Serializable]
-	public class ErrorResponse : IResponse, ISerializable
+	public class ErrorResponse : IResponse
 	{
 		/// <inheritdoc />
 		public string Message { get; }
