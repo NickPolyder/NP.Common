@@ -41,7 +41,7 @@ namespace NP.Common.Extensions
 
 			var generatedValue = factory(key);
 			dictionary.Add(key, generatedValue);
-
+			
 			return generatedValue;
 		}
 	}

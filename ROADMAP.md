@@ -1,5 +1,5 @@
 # ROADMAP
 
+- ~~Add Enumerable extensions~~
 - Add more Responses
-- Add Enumerable extensions
 - Create AspNetCore project 
