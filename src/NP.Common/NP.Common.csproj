@@ -8,6 +8,7 @@
 	  <PackageProjectUrl>https://github.com/NickPolyder/NP.Common</PackageProjectUrl>
 	  <RepositoryUrl>https://github.com/NickPolyder/NP.Common</RepositoryUrl>
 	  <PackageTags>common,code,tools</PackageTags>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
 	  <PackageReleaseNotes>
 	  </PackageReleaseNotes>
   </PropertyGroup>
@@ -15,8 +16,22 @@
   <ItemGroup>
 	  <None Include="..\..\LICENSE">
 		  <Pack>True</Pack>
-		  <PackagePath></PackagePath>
+		  <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include=".\README.md">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
 	  </None>
   </ItemGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
 </Project>

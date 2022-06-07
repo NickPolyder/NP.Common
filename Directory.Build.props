@@ -8,6 +8,11 @@
 		<Copyright>Copyright (c) $([System.DateTime]::Now.Year.ToString()) Nick Polyderopoulos</Copyright>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>		
+		<PackageProjectUrl>https://github.com/NickPolyder/NP.Common</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/NickPolyder/NP.Common</RepositoryUrl>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	</PropertyGroup>
 </Project>
