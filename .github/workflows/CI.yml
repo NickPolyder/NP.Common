@@ -61,7 +61,7 @@ jobs:
         git commit -m 'CI: ${{ github.run_number }}, Nuget Version: ${{steps.get-app-version.outputs.AppVersion}}
          Commit Hash: ${{ github.sha }}
          Branch: ${{ github.ref_name }}'
-        git push -u origin
+        git push -u origin coverage
         git tag -f 'coverage_${{ github.ref_name }}'
         git push -f --tags
       continue-on-error: true
