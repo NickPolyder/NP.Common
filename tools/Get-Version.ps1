@@ -4,7 +4,7 @@ A tool that gets the latest nuget version from the sproj.
 
 .PARAMETER ProjectPath
 The Path to the project.
-[Default = ../src/NP.ObjectComparison/NP.ObjectComparison.csproj]
+[Default = ../src/NP.Common/NP.Common.csproj]
 
 #>
 
@@ -14,7 +14,7 @@ param(
 
 if([System.String]::IsNullOrWhiteSpace($ProjectPath))
 {
-    $ProjectPath = [System.IO.Path]::Combine((Split-Path $PSScriptRoot),"src","NP.ObjectComparison", "NP.ObjectComparison.csproj");
+    $ProjectPath = [System.IO.Path]::Combine((Split-Path $PSScriptRoot),"src","NP.Common", "NP.Common.csproj");
 }
 
 $project = Get-ChildItem $ProjectPath -Filter "*.csproj" -Exclude ("*Tests*") -Recurse | Select-Object -First 1
