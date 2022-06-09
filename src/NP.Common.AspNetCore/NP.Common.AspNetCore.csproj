@@ -1,29 +1,27 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-	  <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-	  <Version>0.5.1</Version>
-	  <Product>NP.Common</Product>
-	  <Description>The NP.Common library provides common extensions and utilities for coding.</Description>
+	<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+	  <Version>0.5.0</Version>
+	  <Product>NP.Common.AspNetCore</Product>
+	  <Description>The NP.Common.AspNetCore library provides common extensions and utilities for coding.</Description>
 	  <PackageProjectUrl>https://github.com/NickPolyder/NP.Common</PackageProjectUrl>
 	  <RepositoryUrl>https://github.com/NickPolyder/NP.Common</RepositoryUrl>
 	  <PackageTags>common,code,tools</PackageTags>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
-	  <PackageReleaseNotes>- added Task helpers.
-- Fixes in When Builder Return functionality.
-	  </PackageReleaseNotes>
+	  <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 
-  <ItemGroup>
-	  <None Include="..\..\LICENSE">
-		  <Pack>True</Pack>
-		  <PackagePath>\</PackagePath>
-	  </None>
-	  <None Include=".\README.md">
-		  <Pack>True</Pack>
-		  <PackagePath>\</PackagePath>
-	  </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include=".\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
@@ -35,4 +33,9 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\NP.Common\NP.Common.csproj" />
+	</ItemGroup>
+
 </Project>
