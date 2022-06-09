@@ -2,14 +2,15 @@
 
   <PropertyGroup>
 	<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-	  <Version>0.5.0</Version>
+	  <Version>0.5.1</Version>
 	  <Product>NP.Common</Product>
 	  <Description>The NP.Common library provides common extensions and utilities for coding.</Description>
 	  <PackageProjectUrl>https://github.com/NickPolyder/NP.Common</PackageProjectUrl>
 	  <RepositoryUrl>https://github.com/NickPolyder/NP.Common</RepositoryUrl>
 	  <PackageTags>common,code,tools</PackageTags>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
-	  <PackageReleaseNotes>
+	  <PackageReleaseNotes>- added Task helpers.
+- Fixes in When Builder Return functionality.
 	  </PackageReleaseNotes>
   </PropertyGroup>
 

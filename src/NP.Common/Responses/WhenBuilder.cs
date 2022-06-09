@@ -209,7 +209,16 @@ namespace NP.Common.Responses
 		public IResponse Return() => _response ?? _request;
 
 		/// <returns>The modified mapped response.</returns>
-		public IResponse<TData> Return<TData>() => Return(Maybe<TData>.Empty);
+		public IResponse<TData> Return<TData>()
+		{
+			var result = Return();
+			if (result is IResponse<TData> responseWithData)
+			{
+				return responseWithData;
+			}
+
+			return Return(Maybe<TData>.Empty);
+		}
 
 
 		/// <typeparam name="TData"></typeparam>
@@ -217,12 +226,8 @@ namespace NP.Common.Responses
 		/// <returns>The modified mapped response.</returns>
 		public IResponse<TData> Return<TData>(Maybe<TData> data)
 		{
-			var result = _response ?? _request;
-			if (result is IResponse<TData> responseWithData)
-			{
-				return responseWithData;
-			}
-
+			var result = Return();
+			
 			return result?.CastTo(data);
 		}
 	}
@@ -433,19 +438,24 @@ namespace NP.Common.Responses
 		public IResponse Return() => _response ?? _request;
 
 		/// <returns>The modified mapped response.</returns>
-		public IResponse<TOtherData> Return<TOtherData>() => Return(Maybe<TOtherData>.Empty);
+		public IResponse<TOtherData> Return<TOtherData>()
+		{
+			var result = Return();
+			if (result is IResponse<TOtherData> responseWithData)
+			{
+				return responseWithData;
+			}
+
+			return Return(Maybe<TOtherData>.Empty);
+		}
 
 		/// <typeparam name="TOtherData"></typeparam>
 		/// <param name="data"></param>
 		/// <returns>The modified mapped response.</returns>
 		public IResponse<TOtherData> Return<TOtherData>(Maybe<TOtherData> data)
 		{
-			var result = _response ?? _request;
-			if (result is IResponse<TOtherData> responseWithData)
-			{
-				return responseWithData;
-			}
-
+			var result = Return();
+			
 			return result?.CastTo(data);
 		}
 	}

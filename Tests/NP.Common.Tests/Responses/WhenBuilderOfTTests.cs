@@ -1,15 +1,16 @@
 ﻿using NP.Common.Extensions;
 using NP.Common.Responses;
+using Shouldly;
 
 namespace NP.Common.Tests.Responses;
 
 [Trait("Category", "Responses")]
-[Trait("Description", "When Builder Tests")]
-public class WhenBuilderTests
+[Trait("Description", "When Builder of T Tests")]
+public class WhenBuilderOfTTests
 {
 	private readonly IFixture _fixture;
 
-	public WhenBuilderTests()
+	public WhenBuilderOfTTests()
 	{
 		_fixture = new Fixture();
 	}
@@ -18,7 +19,7 @@ public class WhenBuilderTests
 	public void Execute_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
@@ -42,7 +43,7 @@ public class WhenBuilderTests
 	public async Task ExecuteAsync_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
@@ -67,25 +68,25 @@ public class WhenBuilderTests
 	public void ExecuteOfTData_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		sut.Execute<int>(request =>
+		sut.Execute<double>(request =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
-			return changedResponse.CastTo<int>(Maybe<int>.Empty);
+			return changedResponse.CastTo<double>(Maybe<double>.Empty);
 		});
 
 		// Assert
 		hasBeenCalled.ShouldBeTrue();
 		actualResponse.ShouldNotBeNull().ShouldBe(request);
 		var returned = sut.Return();
-		returned.ShouldBeOfType<BadInputResponse<int>>().Payload.ShouldBe(Maybe<int>.Empty);
+		returned.ShouldBeOfType<BadInputResponse<double>>().Payload.ShouldBe(Maybe<double>.Empty);
 		returned.Message.ShouldBe(changedResponse.Message);
 	}
 
@@ -93,25 +94,25 @@ public class WhenBuilderTests
 	public async Task ExecuteAsyncOfTData_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		await sut.ExecuteAsync<int>((request, token) =>
+		await sut.ExecuteAsync<double>((request, token) =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
-			return Task.FromResult<IResponse<int>>(changedResponse.CastTo<int>(Maybe<int>.Empty));
+			return Task.FromResult<IResponse<double>>(changedResponse.CastTo<double>(Maybe<double>.Empty));
 		});
 
 		// Assert
 		hasBeenCalled.ShouldBeTrue();
 		actualResponse.ShouldNotBeNull().ShouldBe(request);
 		var returned = sut.Return();
-		returned.ShouldBeOfType<BadInputResponse<int>>().Payload.ShouldBe(Maybe<int>.Empty);
+		returned.ShouldBeOfType<BadInputResponse<double>>().Payload.ShouldBe(Maybe<double>.Empty);
 		returned.Message.ShouldBe(changedResponse.Message);
 	}
 
@@ -119,14 +120,14 @@ public class WhenBuilderTests
 	public void ExecuteIf_WhenTheConcreteMatches_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		sut.ExecuteIf<SuccessResponse>(request =>
+		sut.ExecuteIf<SuccessResponse<int>>(request =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
@@ -143,14 +144,14 @@ public class WhenBuilderTests
 	public void ExecuteIf_WhenTheConcreteDoesNotMatch_ShouldNotRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		sut.ExecuteIf<ErrorResponse>(request =>
+		sut.ExecuteIf<ErrorResponse<int>>(request =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
@@ -167,14 +168,14 @@ public class WhenBuilderTests
 	public async Task ExecuteIfAsync_WhenTheConcreteMatches_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		await sut.ExecuteIfAsync<SuccessResponse>((request, token) =>
+		await sut.ExecuteIfAsync<SuccessResponse<int>>((request, token) =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
@@ -191,14 +192,14 @@ public class WhenBuilderTests
 	public async Task ExecuteIfAsync_WhenTheConcreteDoesNotMatch_ShouldNotRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		await sut.ExecuteIfAsync<ErrorResponse>((request, token) =>
+		await sut.ExecuteIfAsync<ErrorResponse<int>>((request, token) =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
@@ -216,25 +217,25 @@ public class WhenBuilderTests
 	public void ExecuteIfOfTData_WhenTheConcreteMatches_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		sut.ExecuteIf<SuccessResponse, int>(request =>
+		sut.ExecuteIf<SuccessResponse<int>, double>(request =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
-			return changedResponse.CastTo<int>(Maybe<int>.Empty);
+			return changedResponse.CastTo<double>(Maybe<double>.Empty);
 		});
 
 		// Assert
 		hasBeenCalled.ShouldBeTrue();
 		actualResponse.ShouldNotBeNull().ShouldBe(request);
 		var returned = sut.Return();
-		returned.ShouldBeOfType<BadInputResponse<int>>().Payload.ShouldBe(Maybe<int>.Empty);
+		returned.ShouldBeOfType<BadInputResponse<double>>().Payload.ShouldBe(Maybe<double>.Empty);
 		returned.Message.ShouldBe(changedResponse.Message);
 	}
 
@@ -242,18 +243,18 @@ public class WhenBuilderTests
 	public void ExecuteIfOfTData_WhenTheConcreteDoesNotMatch_ShouldNotRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		sut.ExecuteIf<ErrorResponse, int>(request =>
+		sut.ExecuteIf<ErrorResponse<int>, double>(request =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
-			return changedResponse.CastTo<int>(Maybe<int>.Empty);
+			return changedResponse.CastTo<double>(Maybe<double>.Empty);
 		});
 
 		// Assert
@@ -266,25 +267,25 @@ public class WhenBuilderTests
 	public async Task ExecuteIfAsyncOfTData_WhenTheConcreteMatches_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		await sut.ExecuteIfAsync<SuccessResponse, int>((request, token) =>
+		await sut.ExecuteIfAsync<SuccessResponse<int>, double>((request, token) =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
-			return Task.FromResult<IResponse<int>>(changedResponse.CastTo<int>(Maybe<int>.Empty));
+			return Task.FromResult<IResponse<double>>(changedResponse.CastTo<double>(Maybe<double>.Empty));
 		});
 
 		// Assert
 		hasBeenCalled.ShouldBeTrue();
 		actualResponse.ShouldNotBeNull().ShouldBe(request);
 		var returned = sut.Return();
-		returned.ShouldBeOfType<BadInputResponse<int>>().Payload.ShouldBe(Maybe<int>.Empty);
+		returned.ShouldBeOfType<BadInputResponse<double>>().Payload.ShouldBe(Maybe<double>.Empty);
 		returned.Message.ShouldBe(changedResponse.Message);
 	}
 
@@ -292,18 +293,18 @@ public class WhenBuilderTests
 	public async Task ExecuteIfAsyncOfTData_WhenTheConcreteDoesNotMatch_ShouldNotRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		await sut.ExecuteIfAsync<ErrorResponse, int>((request, token) =>
+		await sut.ExecuteIfAsync<ErrorResponse<int>, double>((request, token) =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
-			return Task.FromResult<IResponse<int>>(changedResponse.CastTo<int>(Maybe<int>.Empty));
+			return Task.FromResult<IResponse<double>>(changedResponse.CastTo<double>(Maybe<double>.Empty));
 		});
 
 		// Assert
@@ -316,14 +317,14 @@ public class WhenBuilderTests
 	public void ExecuteIfNot_WhenTheConcreteMatches_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		sut.ExecuteIfNot<SuccessResponse>(request =>
+		sut.ExecuteIfNot<SuccessResponse<int>>(request =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
@@ -340,14 +341,14 @@ public class WhenBuilderTests
 	public void ExecuteIfNot_WhenTheConcreteDoesNotMatch_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		sut.ExecuteIfNot<ErrorResponse>(request =>
+		sut.ExecuteIfNot<ErrorResponse<int>>(request =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
@@ -367,14 +368,14 @@ public class WhenBuilderTests
 	public async Task ExecuteIfNotAsync_WhenTheConcreteMatches_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		await sut.ExecuteIfNotAsync<SuccessResponse>((request , token) =>
+		await sut.ExecuteIfNotAsync<SuccessResponse<int>>((request, token) =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
@@ -391,14 +392,14 @@ public class WhenBuilderTests
 	public async Task ExecuteIfNotAsync_WhenTheConcreteDoesNotMatch_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		await sut.ExecuteIfNotAsync<ErrorResponse>((request , token) =>
+		await sut.ExecuteIfNotAsync<ErrorResponse<int>>((request, token) =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
@@ -410,23 +411,23 @@ public class WhenBuilderTests
 		actualResponse.ShouldNotBeNull().ShouldBe(request);
 		sut.Return().ShouldBe(changedResponse);
 	}
-	
+
 	[Fact(DisplayName = "ExecuteIfNot Of TData with the correct concrete type should NOT run the action and save the response.")]
 	public void ExecuteIfNot_OfTData_WhenTheConcreteMatches_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		sut.ExecuteIfNot<SuccessResponse, int>(request =>
+		sut.ExecuteIfNot<SuccessResponse<int>, double>(request =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
-			return changedResponse.CastTo<int>(Maybe<int>.Empty);
+			return changedResponse.CastTo<double>(Maybe<double>.Empty);
 		});
 
 		// Assert
@@ -439,25 +440,25 @@ public class WhenBuilderTests
 	public void ExecuteIfNot_OfTData_WhenTheConcreteDoesNotMatch_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		sut.ExecuteIfNot<ErrorResponse, int>(request =>
+		sut.ExecuteIfNot<ErrorResponse<int>, double>(request =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
-			return changedResponse.CastTo<int>(Maybe<int>.Empty);
+			return changedResponse.CastTo<double>(Maybe<double>.Empty);
 		});
 
 		// Assert
 		hasBeenCalled.ShouldBeTrue();
 		actualResponse.ShouldNotBeNull().ShouldBe(request);
 		var returned = sut.Return();
-		returned.ShouldBeOfType<BadInputResponse<int>>().Payload.ShouldBe(Maybe<int>.Empty);
+		returned.ShouldBeOfType<BadInputResponse<double>>().Payload.ShouldBe(Maybe<double>.Empty);
 		returned.Message.ShouldBe(changedResponse.Message);
 	}
 
@@ -468,18 +469,18 @@ public class WhenBuilderTests
 	public async Task ExecuteIfNotAsync_OfTData_WhenTheConcreteMatches_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		await sut.ExecuteIfNotAsync<SuccessResponse, int>((request, token) =>
+		await sut.ExecuteIfNotAsync<SuccessResponse<int>, double>((request, token) =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
-			return Task.FromResult<IResponse<int>>(changedResponse.CastTo<int>(Maybe<int>.Empty));
+			return Task.FromResult<IResponse<double>>(changedResponse.CastTo<double>(Maybe<double>.Empty));
 		});
 
 		// Assert
@@ -492,25 +493,25 @@ public class WhenBuilderTests
 	public async Task ExecuteIfNotAsync_OfTData_WhenTheConcreteDoesNotMatch_ShouldRunAndStoreTheResponse()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
 		IResponse? actualResponse = null;
 
 		// Act
-		await sut.ExecuteIfNotAsync<ErrorResponse, int>((request, token) =>
+		await sut.ExecuteIfNotAsync<ErrorResponse<int>, double>((request, token) =>
 		{
 			actualResponse = request;
 			hasBeenCalled = true;
-			return Task.FromResult<IResponse<int>>(changedResponse.CastTo<int>(Maybe<int>.Empty));
+			return Task.FromResult<IResponse<double>>(changedResponse.CastTo<double>(Maybe<double>.Empty));
 		});
 
 		// Assert
 		hasBeenCalled.ShouldBeTrue();
 		actualResponse.ShouldNotBeNull().ShouldBe(request);
 		var returned = sut.Return();
-		returned.ShouldBeOfType<BadInputResponse<int>>().Payload.ShouldBe(Maybe<int>.Empty);
+		returned.ShouldBeOfType<BadInputResponse<double>>().Payload.ShouldBe(Maybe<double>.Empty);
 		returned.Message.ShouldBe(changedResponse.Message);
 	}
 
@@ -518,7 +519,7 @@ public class WhenBuilderTests
 	public void Return_ShouldReturnRequest_WhenTheResponseIsNotSet()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 
 		// Act
@@ -532,7 +533,7 @@ public class WhenBuilderTests
 	public void Return_ShouldReturnResponse_WhenTheResponseIsSet()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
 		var changedResponse = _fixture.Create<BadInputResponse>();
@@ -554,10 +555,10 @@ public class WhenBuilderTests
 	public void ReturnOfT_ShouldReturnTheCastedResponse_WhenTheResponseIsAlreadyCasted()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
-		var changedResponse = _fixture.Create<BadInputResponse<int>>();
+		var changedResponse = _fixture.Create<BadInputResponse<double>>();
 		sut.Execute(request =>
 		{
 			hasBeenCalled = true;
@@ -565,11 +566,11 @@ public class WhenBuilderTests
 		});
 
 		// Act
-		var result = sut.Return<int>();
+		var result = sut.Return<double>();
 
 		// Assert
 		hasBeenCalled.ShouldBeTrue();
-		result.ShouldBeOfType<BadInputResponse<int>>();
+		result.ShouldBeOfType<BadInputResponse<double>>();
 		result.ShouldBe(changedResponse);
 	}
 
@@ -577,14 +578,14 @@ public class WhenBuilderTests
 	public void ReturnOfT_ShouldReturnAnEmptyPayload()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
-		
+
 		// Act
-		var result = sut.Return<int>();
+		var result = sut.Return<double>();
 
 		// Assert
-		result.ShouldBeOfType<SuccessResponse<int>>();
+		result.ShouldBeOfType<SuccessResponse<double>>();
 		result.Payload.HasValue.ShouldBeFalse();
 	}
 
@@ -592,58 +593,58 @@ public class WhenBuilderTests
 	public void ReturnOfT_ShouldCastToTheNewResponseOfT()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 
 		// Act
-		var result = sut.Return<int>();
+		var result = sut.Return<double>();
 
 		// Assert
-		result.ShouldBeOfType<SuccessResponse<int>>();
+		result.ShouldBeOfType<SuccessResponse<double>>();
 		result.Payload.HasValue.ShouldBeFalse();
 		result.Message.ShouldBe(request.Message);
 	}
-	
+
 
 	[Fact(DisplayName = "Return of T with data, should cast the Response object with the new value")]
 	public void ReturnOfTWithData_ShouldCastResponseWithNewData()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
 		var hasBeenCalled = false;
-		var changedResponse = _fixture.Create<BadInputResponse<int>>();
+		var changedResponse = _fixture.Create<BadInputResponse<double>>();
 		sut.Execute(request =>
 		{
 			hasBeenCalled = true;
 			return changedResponse;
 		});
 
-		var expectedData = _fixture.Create<int>();
+		var expectedData = _fixture.Create<double>();
 
 		// Act
-		var result = sut.Return<int>(Maybe<int>.WithValue(expectedData));
+		var result = sut.Return<double>(Maybe<double>.WithValue(expectedData));
 
 		// Assert
 		hasBeenCalled.ShouldBeTrue();
-		result.ShouldBeOfType<BadInputResponse<int>>();
+		result.ShouldBeOfType<BadInputResponse<double>>();
 		result.Payload.HasValue.ShouldBeTrue();
 		result.Payload.Value.ShouldBe(expectedData);
 	}
-	
+
 	[Fact(DisplayName = "Return of T with data, should return the new IResponse<T> with the Data in")]
 	public void ReturnOfTWithData_ShouldCastToTheNewResponseOfT()
 	{
 		// Assign
-		var request = _fixture.Create<SuccessResponse>();
+		var request = CreateSuccessRequest<int>();
 		var sut = request.When();
-		var expectedData = _fixture.Create<int>();
+		var expectedData = _fixture.Create<double>();
 
 		// Act
-		var result = sut.Return<int>(Maybe<int>.WithValue(expectedData));
+		var result = sut.Return<double>(Maybe<double>.WithValue(expectedData));
 
 		// Assert
-		result.ShouldBeOfType<SuccessResponse<int>>();
+		result.ShouldBeOfType<SuccessResponse<double>>();
 		result.Payload.HasValue.ShouldBeTrue();
 		result.Payload.Value.ShouldBe(expectedData);
 		result.Message.ShouldBe(request.Message);
@@ -655,12 +656,19 @@ public class WhenBuilderTests
 		// Assign
 		SuccessResponse? request = null;
 		var sut = request.When();
-		var expectedData = _fixture.Create<int>();
+		var expectedData = _fixture.Create<double>();
 
 		// Act
-		var result = sut.Return<int>(Maybe<int>.WithValue(expectedData));
+		var result = sut.Return<double>(Maybe<double>.WithValue(expectedData));
 
 		// Assert
 		result.ShouldBeNull();
+	}
+
+
+	private IResponse<T> CreateSuccessRequest<T>()
+	{
+		var data = _fixture.Create<T>();
+		return new SuccessResponse<T>(Maybe<T>.WithValue(data));
 	}
 }
