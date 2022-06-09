@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<coverage version="1.0" date="2022-06-09_23-08-56" tag="CI 18, Nuget Version 0.5.1">
+  <assembly name="NP.Common">
+    <class name="NP.Common.ErrorEntry" coveredlines="0" coverablelines="57" totallines="155" coveredbranches="0" totalbranches="16" coveredcodeelements="0" totalcodeelements="8" />
+    <class name="NP.Common.Extensions.CollectionExtensions" coveredlines="12" coverablelines="12" totallines="37" coveredbranches="6" totalbranches="6" coveredcodeelements="1" totalcodeelements="1" />
+    <class name="NP.Common.Extensions.DictionaryExtensions" coveredlines="14" coverablelines="14" totallines="48" coveredbranches="6" totalbranches="6" coveredcodeelements="1" totalcodeelements="1" />
+    <class name="NP.Common.Extensions.EnumerableExtensions" coveredlines="0" coverablelines="50" totallines="232" coveredbranches="0" totalbranches="24" coveredcodeelements="0" totalcodeelements="4" />
+    <class name="NP.Common.Extensions.MaybeExtensions" coveredlines="6" coverablelines="6" totallines="24" coveredbranches="2" totalbranches="2" coveredcodeelements="1" totalcodeelements="1" />
+    <class name="NP.Common.Extensions.ObjectExtensions" coveredlines="7" coverablelines="7" totallines="31" coveredbranches="4" totalbranches="4" coveredcodeelements="2" totalcodeelements="2" />
+    <class name="NP.Common.Extensions.ResponseExtensions" coveredlines="2" coverablelines="2" totallines="25" coveredbranches="0" totalbranches="0" coveredcodeelements="2" totalcodeelements="2" />
+    <class name="NP.Common.Extensions.TaskExtensions" coveredlines="0" coverablelines="37" totallines="104" coveredbranches="0" totalbranches="0" coveredcodeelements="0" totalcodeelements="8" />
+    <class name="NP.Common.Extensions.TaskHelper" coveredlines="0" coverablelines="42" totallines="118" coveredbranches="0" totalbranches="8" coveredcodeelements="0" totalcodeelements="4" />
+    <class name="NP.Common.Extensions.TypeExtensions" coveredlines="0" coverablelines="13" totallines="48" coveredbranches="0" totalbranches="4" coveredcodeelements="0" totalcodeelements="3" />
+    <class name="NP.Common.Maybe`1" coveredlines="14" coverablelines="65" totallines="145" coveredbranches="0" totalbranches="20" coveredcodeelements="4" totalcodeelements="11" />
+    <class name="NP.Common.OR`2" coveredlines="0" coverablelines="14" totallines="154" coveredbranches="0" totalbranches="0" coveredcodeelements="0" totalcodeelements="6" />
+    <class name="NP.Common.OR`3" coveredlines="0" coverablelines="24" totallines="154" coveredbranches="0" totalbranches="0" coveredcodeelements="0" totalcodeelements="9" />
+    <class name="NP.Common.Responses.BadInputResponse" coveredlines="14" coverablelines="23" totallines="163" coveredbranches="0" totalbranches="0" coveredcodeelements="4" totalcodeelements="6" />
+    <class name="NP.Common.Responses.BadInputResponse`1" coveredlines="7" coverablelines="27" totallines="163" coveredbranches="0" totalbranches="2" coveredcodeelements="2" totalcodeelements="8" />
+    <class name="NP.Common.Responses.ErrorResponse" coveredlines="0" coverablelines="27" totallines="141" coveredbranches="0" totalbranches="14" coveredcodeelements="0" totalcodeelements="6" />
+    <class name="NP.Common.Responses.ErrorResponse`1" coveredlines="0" coverablelines="30" totallines="141" coveredbranches="0" totalbranches="2" coveredcodeelements="0" totalcodeelements="9" />
+    <class name="NP.Common.Responses.NotFoundResponse" coveredlines="0" coverablelines="23" totallines="165" coveredbranches="0" totalbranches="0" coveredcodeelements="0" totalcodeelements="6" />
+    <class name="NP.Common.Responses.NotFoundResponse`1" coveredlines="0" coverablelines="27" totallines="165" coveredbranches="0" totalbranches="2" coveredcodeelements="0" totalcodeelements="8" />
+    <class name="NP.Common.Responses.SuccessResponse" coveredlines="10" coverablelines="17" totallines="123" coveredbranches="0" totalbranches="0" coveredcodeelements="3" totalcodeelements="5" />
+    <class name="NP.Common.Responses.SuccessResponse`1" coveredlines="10" coverablelines="21" totallines="123" coveredbranches="0" totalbranches="2" coveredcodeelements="3" totalcodeelements="6" />
+    <class name="NP.Common.Responses.WhenBuilder" coveredlines="53" coverablelines="53" totallines="462" coveredbranches="18" totalbranches="18" coveredcodeelements="10" totalcodeelements="10" />
+    <class name="NP.Common.Responses.WhenBuilder`1" coveredlines="53" coverablelines="53" totallines="462" coveredbranches="16" totalbranches="18" coveredcodeelements="10" totalcodeelements="10" />
+  </assembly>
+</coverage>
