@@ -6,13 +6,12 @@
 	public static class ObjectExtensions
 	{
 		/// <summary>
-		/// Cast <typeparamref name="TFrom"/> to <typeparamref name="TTo"/>.
+		/// Cast <paramref name="obj"/> to <typeparamref name="TTo"/>.
 		/// </summary>
-		/// <typeparam name="TFrom"></typeparam>
 		/// <typeparam name="TTo"></typeparam>
 		/// <param name="obj"></param>
 		/// <returns></returns>
-		public static TTo As<TFrom, TTo>(this TFrom obj)
+		public static TTo As<TTo>(this object obj)
 		{
 			if(obj is TTo y)
 			{
@@ -21,5 +20,12 @@
 
 			return default(TTo);
 		}
+
+		/// <summary>
+		/// Checks if the object is null.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static bool IsNull(this object obj) => obj  == null;
 	}
 }
