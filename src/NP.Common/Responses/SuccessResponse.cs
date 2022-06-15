@@ -63,7 +63,9 @@ namespace NP.Common.Responses
 	/// <typeparam name="TData"></typeparam>
 	public class SuccessResponse<TData> : SuccessResponse, IResponse<TData>
 	{
-		/// <inheritdoc />
+		/// <summary>
+		/// Payload
+		/// </summary>
 		public Maybe<TData> Payload { get; }
 
 		/// <summary>

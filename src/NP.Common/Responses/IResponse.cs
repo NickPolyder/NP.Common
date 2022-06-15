@@ -11,7 +11,7 @@ namespace NP.Common.Responses
 		/// Information about the response.
 		/// </summary>
 		string Message { get; }
-
+		
 		/// <summary>
 		/// Casts the Response to its generic counterpart.
 		/// </summary>
@@ -27,9 +27,5 @@ namespace NP.Common.Responses
 	/// <typeparam name="TData"></typeparam>
 	public interface IResponse<TData> : IResponse
 	{
-		/// <summary>
-		/// The Payload of the Response 
-		/// </summary>
-		Maybe<TData> Payload { get; }
 	}
 }

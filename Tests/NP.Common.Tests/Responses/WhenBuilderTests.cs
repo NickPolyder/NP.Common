@@ -584,8 +584,8 @@ public class WhenBuilderTests
 		var result = sut.Return<int>();
 
 		// Assert
-		result.ShouldBeOfType<SuccessResponse<int>>();
-		result.Payload.HasValue.ShouldBeFalse();
+		var successResult = result.ShouldBeOfType<SuccessResponse<int>>();
+		successResult.Payload.HasValue.ShouldBeFalse();
 	}
 
 	[Fact(DisplayName = "Return of T, should return an Empty Payload when the response is not already of type IResponse<T>")]
@@ -599,9 +599,9 @@ public class WhenBuilderTests
 		var result = sut.Return<int>();
 
 		// Assert
-		result.ShouldBeOfType<SuccessResponse<int>>();
-		result.Payload.HasValue.ShouldBeFalse();
-		result.Message.ShouldBe(request.Message);
+		var successResult = result.ShouldBeOfType<SuccessResponse<int>>();
+		successResult.Payload.HasValue.ShouldBeFalse();
+		successResult.Message.ShouldBe(request.Message);
 	}
 	
 
@@ -626,9 +626,9 @@ public class WhenBuilderTests
 
 		// Assert
 		hasBeenCalled.ShouldBeTrue();
-		result.ShouldBeOfType<BadInputResponse<int>>();
-		result.Payload.HasValue.ShouldBeTrue();
-		result.Payload.Value.ShouldBe(expectedData);
+		var badInputResult = result.ShouldBeOfType<BadInputResponse<int>>();
+		badInputResult.Payload.HasValue.ShouldBeTrue();
+		badInputResult.Payload.Value.ShouldBe(expectedData);
 	}
 	
 	[Fact(DisplayName = "Return of T with data, should return the new IResponse<T> with the Data in")]
@@ -643,10 +643,10 @@ public class WhenBuilderTests
 		var result = sut.Return<int>(Maybe<int>.WithValue(expectedData));
 
 		// Assert
-		result.ShouldBeOfType<SuccessResponse<int>>();
-		result.Payload.HasValue.ShouldBeTrue();
-		result.Payload.Value.ShouldBe(expectedData);
-		result.Message.ShouldBe(request.Message);
+		var successResult = result.ShouldBeOfType<SuccessResponse<int>>();
+		successResult.Payload.HasValue.ShouldBeTrue();
+		successResult.Payload.Value.ShouldBe(expectedData);
+		successResult.Message.ShouldBe(request.Message);
 	}
 
 	[Fact(DisplayName = "Return of T with data, should return null when the result is null.")]

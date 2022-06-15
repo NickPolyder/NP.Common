@@ -585,8 +585,8 @@ public class WhenBuilderOfTTests
 		var result = sut.Return<double>();
 
 		// Assert
-		result.ShouldBeOfType<SuccessResponse<double>>();
-		result.Payload.HasValue.ShouldBeFalse();
+		var successResult = result.ShouldBeOfType<SuccessResponse<double>>();
+		successResult.Payload.HasValue.ShouldBeFalse();
 	}
 
 	[Fact(DisplayName = "Return of T, should return an Empty Payload when the response is not already of type IResponse<T>")]
@@ -600,9 +600,9 @@ public class WhenBuilderOfTTests
 		var result = sut.Return<double>();
 
 		// Assert
-		result.ShouldBeOfType<SuccessResponse<double>>();
-		result.Payload.HasValue.ShouldBeFalse();
-		result.Message.ShouldBe(request.Message);
+		var successResult = result.ShouldBeOfType<SuccessResponse<double>>();
+		successResult.Payload.HasValue.ShouldBeFalse();
+		successResult.Message.ShouldBe(request.Message);
 	}
 
 
@@ -627,9 +627,11 @@ public class WhenBuilderOfTTests
 
 		// Assert
 		hasBeenCalled.ShouldBeTrue();
-		result.ShouldBeOfType<BadInputResponse<double>>();
-		result.Payload.HasValue.ShouldBeTrue();
-		result.Payload.Value.ShouldBe(expectedData);
+		
+		var badInput = result.ShouldBeOfType<BadInputResponse<double>>();
+		badInput.Payload.HasValue.ShouldBeTrue();
+		badInput.Payload.Value.ShouldBe(expectedData);
+		badInput.Message.ShouldBe(request.Message);
 	}
 
 	[Fact(DisplayName = "Return of T with data, should return the new IResponse<T> with the Data in")]
@@ -644,10 +646,10 @@ public class WhenBuilderOfTTests
 		var result = sut.Return<double>(Maybe<double>.WithValue(expectedData));
 
 		// Assert
-		result.ShouldBeOfType<SuccessResponse<double>>();
-		result.Payload.HasValue.ShouldBeTrue();
-		result.Payload.Value.ShouldBe(expectedData);
-		result.Message.ShouldBe(request.Message);
+		var successResult = result.ShouldBeOfType<SuccessResponse<double>>();
+		successResult.Payload.HasValue.ShouldBeTrue();
+		successResult.Payload.Value.ShouldBe(expectedData);
+		successResult.Message.ShouldBe(request.Message);
 	}
 
 	[Fact(DisplayName = "Return of T with data, should return null when the result is null.")]

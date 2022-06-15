@@ -46,7 +46,7 @@ namespace NP.Common.Responses
 		/// <inheritdoc />
 		public IResponse<TData> CastTo<TData>(Maybe<TData> data)
 		{
-			return new NotFoundResponse<TData>(Message, Resource, data);
+			return new NotFoundResponse<TData>(Message, Resource);
 		}
 
 		#region Serialization
@@ -80,8 +80,6 @@ namespace NP.Common.Responses
 	[Serializable]
 	public class NotFoundResponse<TData> : NotFoundResponse, IResponse<TData>
 	{
-		/// <inheritdoc />
-		public Maybe<TData> Payload { get; }
 
 		/// <summary>
 		/// 
@@ -91,53 +89,23 @@ namespace NP.Common.Responses
 
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="data"></param>
-		public NotFoundResponse(Maybe<TData> data) : this(string.Empty, data)
-		{
-
-		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="message"></param>
-		public NotFoundResponse(string message) : this(message, Maybe<TData>.Empty)
+		public NotFoundResponse(string message) : this(message, string.Empty)
 		{
 
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="data"></param>
-		public NotFoundResponse(string message, Maybe<TData> data) : this(message, string.Empty, data)
-		{
-
-		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="message"></param>
 		/// <param name="resource"></param>
-		public NotFoundResponse(string message, string resource) : this(message, resource, Maybe<TData>.Empty)
+		public NotFoundResponse(string message, string resource) : base(message, resource)
 		{
-
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="resource"></param>
-		/// <param name="data"></param>
-		public NotFoundResponse(string message, string resource, Maybe<TData> data) : base(message, resource)
-		{
-			Payload = data;
 		}
 
 		#region Serialization
@@ -149,17 +117,8 @@ namespace NP.Common.Responses
 		/// <param name="context"></param>
 		protected NotFoundResponse(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			Payload = info.GetValue(nameof(Payload), typeof(Maybe<TData>)) is Maybe<TData> data ? data : Maybe<TData>.Empty;
 		}
-
-		/// <inheritdoc />
-		public override void GetObjectData(SerializationInfo info, StreamingContext context)
-		{
-			base.GetObjectData(info, context);
-
-			info.AddValue(nameof(Payload), Payload, typeof(Maybe<TData>));
-		}
-
+		
 		#endregion
 	}
 }

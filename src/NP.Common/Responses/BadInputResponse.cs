@@ -78,7 +78,9 @@ namespace NP.Common.Responses
 	/// <typeparam name="TData"></typeparam>
 	public class BadInputResponse<TData> : BadInputResponse, IResponse<TData>
 	{
-		/// <inheritdoc />
+		/// <summary>
+		///  Data related to the result.
+		/// </summary>
 		public Maybe<TData> Payload { get; }
 
 		/// <summary>

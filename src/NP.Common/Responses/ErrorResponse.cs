@@ -23,14 +23,14 @@ namespace NP.Common.Responses
 		/// 
 		/// </summary>
 		/// <param name="message"></param>
-		public ErrorResponse(string message): this(message, null)
+		public ErrorResponse(string message) : this(message, null)
 		{ }
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="errors"></param>
-		public ErrorResponse(IEnumerable<ErrorEntry> errors): this(null, errors)
+		public ErrorResponse(IEnumerable<ErrorEntry> errors) : this(null, errors)
 		{ }
 
 		/// <summary>
@@ -46,7 +46,7 @@ namespace NP.Common.Responses
 		/// <inheritdoc />
 		public IResponse<TData> CastTo<TData>(Maybe<TData> data)
 		{
-			return new ErrorResponse<TData>(Message, Errors, data);
+			return new ErrorResponse<TData>(Message, Errors);
 		}
 
 		#region Serialization
@@ -58,8 +58,8 @@ namespace NP.Common.Responses
 		/// <param name="context"></param>
 		protected ErrorResponse(SerializationInfo info, StreamingContext context)
 		{
-			Errors = info.GetValue(nameof(Errors), typeof(ErrorEntry[])) is IEnumerable<ErrorEntry> entries 
-				? entries 
+			Errors = info.GetValue(nameof(Errors), typeof(ErrorEntry[])) is IEnumerable<ErrorEntry> entries
+				? entries
 				: Enumerable.Empty<ErrorEntry>();
 
 			Message = info.GetString(nameof(Message)) ?? Errors.FirstOrDefault()?.Message;
@@ -86,56 +86,29 @@ namespace NP.Common.Responses
 	[Serializable]
 	public class ErrorResponse<TData> : ErrorResponse, IResponse<TData>
 	{
-		/// <inheritdoc />
-		public Maybe<TData> Payload { get; }
 
 		/// <inheritdoc />
-		public ErrorResponse(Maybe<TData> payload) : this(null, null, payload)
+		public ErrorResponse(string message) : this(message, Array.Empty<ErrorEntry>())
 		{
 		}
 
 		/// <inheritdoc />
-		public ErrorResponse(string message) : this(message, Maybe<TData>.Empty)
+		public ErrorResponse(IEnumerable<ErrorEntry> errors) : this(string.Empty, errors)
 		{
 		}
 
 		/// <inheritdoc />
-		public ErrorResponse(string message, Maybe<TData> payload) : this(message, null, payload)
+		public ErrorResponse(string message, IEnumerable<ErrorEntry> errors) : base(message, errors)
 		{
 		}
 
-		/// <inheritdoc />
-		public ErrorResponse(IEnumerable<ErrorEntry> errors) : this(errors, Maybe<TData>.Empty)
-		{
-		}
-
-		/// <inheritdoc />
-		public ErrorResponse(IEnumerable<ErrorEntry> errors, Maybe<TData> payload) : this(null, errors, payload)
-		{
-		}
-
-		/// <inheritdoc />
-		public ErrorResponse(string message, IEnumerable<ErrorEntry> errors) : this(message, errors, Maybe<TData>.Empty)
-		{
-		}
-
-		/// <inheritdoc />
-		public ErrorResponse(string message, IEnumerable<ErrorEntry> errors, Maybe<TData> payload) : base(message, errors)
-		{
-			Payload = payload;
-		}
+		#region Serialization
 
 		/// <inheritdoc />
 		protected ErrorResponse(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			Payload = info.GetValue(nameof(Payload), typeof(Maybe<TData>)) is Maybe<TData> data ? data : Maybe<TData>.Empty;
 		}
 
-		/// <inheritdoc />
-		public override void GetObjectData(SerializationInfo info, StreamingContext context)
-		{
-			base.GetObjectData(info, context);
-			info.AddValue(nameof(Payload), Payload, typeof(Maybe<TData>));
-		}
+		#endregion
 	}
 }
