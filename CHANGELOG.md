@@ -6,6 +6,10 @@
 - Fixes in When Builder Return functionality.  
 - Added new Extension `IResponse.CastTo<TData>()`  
 - Added `AggregateResponse`
+- Added `Clone` Extensions.
+- Added `With` Extension.
+- Added `ToActionResult` Extensions.
+- Added `NotSupported`, `NotAuthenticated`, `NotAuthorized` Responses.
 
 ## 0.5.0
 

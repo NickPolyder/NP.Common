@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
 	<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
@@ -38,6 +38,10 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\NP.Common\NP.Common.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Extensions\" />
 	</ItemGroup>
 
 </Project>
