@@ -111,6 +111,9 @@ namespace NP.Common.AspNetCore.Responses
 				case SuccessResponse<TData> successResponse when successResponse.Payload.HasValue:
 					return new OkObjectResult(successResponse.Payload.Value);
 
+				case SuccessResponse<TData> successResponse when successResponse.Message != null:
+					return new OkObjectResult(successResponse.Message);
+				
 				case NotFoundResponse<TData> notFoundResponse:
 					return new NotFoundObjectResult(notFoundResponse.Message);
 

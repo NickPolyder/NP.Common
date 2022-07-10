@@ -86,11 +86,11 @@ namespace NP.Common.Responses
 		/// <summary>
 		/// 
 		/// </summary>
-		public BadInputResponse() : base()
+		public BadInputResponse() : this(Maybe<TData>.Empty)
 		{
 
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>

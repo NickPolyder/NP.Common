@@ -10,6 +10,7 @@
 - Added `With` Extension.
 - Added `ToActionResult` Extensions.
 - Added `NotSupported`, `NotAuthenticated`, `NotAuthorized` Responses.
+- Added `If` and `IfAsync` Extensions.
 
 ## 0.5.0
 
