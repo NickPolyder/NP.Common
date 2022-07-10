@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NP.Common.Responses;
+using NP.Common.Responses.NP.Common.Responses;
 
 namespace NP.Common.AspNetCore.Responses
 {
@@ -20,6 +21,12 @@ namespace NP.Common.AspNetCore.Responses
 			{
 				case SuccessResponse successResponse:
 					return new OkObjectResult(successResponse.Message);
+
+				case StreamContentResponse streamContentResponse:
+					return new FileStreamResult(streamContentResponse.Content, streamContentResponse.ContentType);
+
+				case ByteContentResponse byteContentResponse:
+					return new FileContentResult(byteContentResponse.Content, byteContentResponse.ContentType);
 
 				case NotFoundResponse notFoundResponse:
 					return new NotFoundObjectResult(notFoundResponse.Message);
@@ -40,7 +47,11 @@ namespace NP.Common.AspNetCore.Responses
 					{
 						StatusCode = (int)HttpStatusCode.UnsupportedMediaType
 					};
-
+				case NotImplementedResponse notImplementedResponse:
+					return new ObjectResult(notImplementedResponse.Message)
+					{
+						StatusCode = (int)HttpStatusCode.NotImplemented
+					};
 				case NotAuthenticatedResponse notAuthenticatedResponse:
 					return new UnauthorizedObjectResult(notAuthenticatedResponse.Message);
 
@@ -49,9 +60,6 @@ namespace NP.Common.AspNetCore.Responses
 					{
 						StatusCode = (int)HttpStatusCode.Forbidden
 					};
-
-				case AggregateResponse aggregateResponse when aggregateResponse.All<SuccessResponse>():
-					return new OkObjectResult(aggregateResponse.Message);
 
 				case AggregateResponse aggregateResponse when aggregateResponse.Contains<BadInputResponse>():
 					var aggregateModelState = new ModelStateDictionary();
@@ -64,15 +72,15 @@ namespace NP.Common.AspNetCore.Responses
 				case AggregateResponse aggregateResponse when aggregateResponse.Contains<ErrorResponse>():
 					var builder = new StringBuilder();
 					var errors = new List<ErrorEntry>();
-					
+
 					foreach (var errorResponse in aggregateResponse.Responses.OfType<ErrorResponse>())
 					{
 						builder.AppendLine(errorResponse.Message);
 						errors.AddRange(errorResponse.Errors);
 					}
-				
+
 					var aggregateErrorResponse = new ErrorResponse(builder.ToString(), errors);
-					
+
 					return new ObjectResult(aggregateErrorResponse)
 					{
 						StatusCode = (int)HttpStatusCode.InternalServerError,
@@ -86,7 +94,11 @@ namespace NP.Common.AspNetCore.Responses
 					{
 						StatusCode = (int)HttpStatusCode.UnsupportedMediaType
 					};
-
+				case AggregateResponse aggregateResponse when aggregateResponse.Contains<NotImplementedResponse>():
+					return new ObjectResult(aggregateResponse.Message)
+					{
+						StatusCode = (int)HttpStatusCode.NotImplemented
+					};
 				case AggregateResponse aggregateResponse when aggregateResponse.Contains<NotAuthenticatedResponse>():
 					return new UnauthorizedObjectResult(aggregateResponse.Message);
 
@@ -95,6 +107,9 @@ namespace NP.Common.AspNetCore.Responses
 					{
 						StatusCode = (int)HttpStatusCode.Forbidden
 					};
+
+				case AggregateResponse aggregateResponse when aggregateResponse.All<SuccessResponse>():
+					return new OkObjectResult(aggregateResponse.Message);
 			}
 
 			return new ObjectResult(null)
@@ -113,7 +128,13 @@ namespace NP.Common.AspNetCore.Responses
 
 				case SuccessResponse<TData> successResponse when successResponse.Message != null:
 					return new OkObjectResult(successResponse.Message);
-				
+
+				case StreamContentResponse<TData> streamContentResponse:
+					return new FileStreamResult(streamContentResponse.Content, streamContentResponse.ContentType);
+
+				case ByteContentResponse<TData> byteContentResponse:
+					return new FileContentResult(byteContentResponse.Content, byteContentResponse.ContentType);
+
 				case NotFoundResponse<TData> notFoundResponse:
 					return new NotFoundObjectResult(notFoundResponse.Message);
 
@@ -133,6 +154,11 @@ namespace NP.Common.AspNetCore.Responses
 					{
 						StatusCode = (int)HttpStatusCode.UnsupportedMediaType
 					};
+				case NotImplementedResponse<TData> notImplementedResponse:
+					return new ObjectResult(notImplementedResponse.Message)
+					{
+						StatusCode = (int)HttpStatusCode.NotImplemented
+					};
 
 				case NotAuthenticatedResponse<TData> notAuthenticatedResponse:
 					return new UnauthorizedObjectResult(notAuthenticatedResponse.Message);
@@ -142,9 +168,6 @@ namespace NP.Common.AspNetCore.Responses
 					{
 						StatusCode = (int)HttpStatusCode.Forbidden
 					};
-					
-				case AggregateResponse<TData> aggregateResponse when aggregateResponse.All<SuccessResponse<TData>>():
-					return new OkObjectResult(aggregateResponse.Message);
 
 				case AggregateResponse<TData> aggregateResponse when aggregateResponse.Contains<BadInputResponse<TData>>():
 					var aggregateModelState = new ModelStateDictionary();
@@ -179,7 +202,11 @@ namespace NP.Common.AspNetCore.Responses
 					{
 						StatusCode = (int)HttpStatusCode.UnsupportedMediaType
 					};
-
+				case AggregateResponse<TData> aggregateResponse when aggregateResponse.Contains<NotImplementedResponse<TData>>():
+					return new ObjectResult(aggregateResponse.Message)
+					{
+						StatusCode = (int)HttpStatusCode.NotImplemented
+					};
 				case AggregateResponse<TData> aggregateResponse when aggregateResponse.Contains<NotAuthenticatedResponse<TData>>():
 					return new UnauthorizedObjectResult(aggregateResponse.Message);
 
@@ -188,6 +215,8 @@ namespace NP.Common.AspNetCore.Responses
 					{
 						StatusCode = (int)HttpStatusCode.Forbidden
 					};
+				case AggregateResponse<TData> aggregateResponse when aggregateResponse.All<SuccessResponse<TData>>():
+					return new OkObjectResult(aggregateResponse.Message);
 			}
 
 			return new ObjectResult(null)

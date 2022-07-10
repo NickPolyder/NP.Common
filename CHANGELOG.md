@@ -11,6 +11,9 @@
 - Added `ToActionResult` Extensions.
 - Added `NotSupported`, `NotAuthenticated`, `NotAuthorized` Responses.
 - Added `If` and `IfAsync` Extensions.
+- Added `NotImplementedResponse`, `ByteContentResponse`, `StreamContentResponse`
+- Added `ToByteArray`, `ToStream` Extensions.
+- Added Samples
 
 ## 0.5.0
 

@@ -9,8 +9,17 @@
 	  <RepositoryUrl>https://github.com/NickPolyder/NP.Common</RepositoryUrl>
 	  <PackageTags>common,code,tools</PackageTags>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
-	  <PackageReleaseNotes>- added Task helpers.
+	  <PackageReleaseNotes>- Added Task Helpers.
 - Fixes in When Builder Return functionality.
+- Added new Extension `IResponse.CastTo'TData()`  
+- Added `AggregateResponse`
+- Added `Clone` Extensions.
+- Added `With` Extension.
+- Added `ToActionResult` Extensions.
+- Added `NotSupported`, `NotAuthenticated`, `NotAuthorized` Responses.
+- Added `If` and `IfAsync` Extensions.
+- Added `NotImplementedResponse`, `ByteContentResponse`, `StreamContentResponse`
+- Added `ToByteArray`, `ToStream` Extensions.
 	  </PackageReleaseNotes>
   </PropertyGroup>
 

@@ -14,4 +14,10 @@
     <ProjectReference Include="..\..\src\NP.Common.AspNetCore\NP.Common.AspNetCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Files\Test.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

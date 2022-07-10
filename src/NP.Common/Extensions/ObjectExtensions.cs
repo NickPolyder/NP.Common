@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -88,7 +90,7 @@ namespace NP.Common.Extensions
 		/// <param name="functor"></param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentNullException"></exception>
-		public static TResult If<TObject,TResult>(this object obj, Func<TObject, TResult> functor)
+		public static TResult If<TObject, TResult>(this object obj, Func<TObject, TResult> functor)
 		{
 			if (obj == null)
 			{
@@ -187,6 +189,62 @@ namespace NP.Common.Extensions
 			{
 				await action(value, cancellationToken);
 			}
+		}
+
+		/// <summary>
+		/// Converts <paramref name="value"/> to a byte array.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="encoding"></param>
+		/// <returns></returns>
+		public static byte[] ToByteArray(this string value, Encoding encoding = null)
+		{
+			var currentEncoding = encoding ?? Encoding.UTF8;
+
+			return !string.IsNullOrWhiteSpace(value)
+				? currentEncoding.GetBytes(value)
+				: Array.Empty<byte>();
+		}
+
+		/// <summary>
+		/// Converts <paramref name="value"/> to a byte array.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static byte[] ToByteArray(this Stream value)
+		{
+			if (value == null)
+			{
+				return Array.Empty<byte>();
+			}
+
+			using (var ms = new MemoryStream())
+
+			{
+				value.CopyTo(ms);
+				return ms.ToArray();
+			}
+		}
+
+		/// <summary>
+		/// Converts <paramref name="value"/> to a Stream.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="encoding"></param>
+		/// <returns></returns>
+		public static Stream ToStream(this string value, Encoding encoding = null)
+		{
+			return value.ToByteArray(encoding).ToStream();
+		}
+
+		/// <summary>
+		/// Converts <paramref name="value"/> to a Stream.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static Stream ToStream(this byte[] value)
+		{
+			return new MemoryStream(value);
 		}
 
 	}

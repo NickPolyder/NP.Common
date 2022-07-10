@@ -8,7 +8,7 @@
 [![Line Coverage](https://raw.githubusercontent.com/NickPolyder/NP.Common/coverage_main/badges/badge_linecoverage.svg)](https://github.com/NickPolyder/NP.Common/releases/tag/coverage_main)
 [![Branch Coverage](https://raw.githubusercontent.com/NickPolyder/NP.Common/coverage_main/badges/badge_branchcoverage.svg)](https://github.com/NickPolyder/NP.Common/releases/tag/coverage_main)
 
-The NP.Common.AspNetCore library provides common extensions and utilities for coding.
+The NP.Common.AspNetCore library provides common extensions and utilities for coding AspNetCore projects.
 
 ## Installation
 

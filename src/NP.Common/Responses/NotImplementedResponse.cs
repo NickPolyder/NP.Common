@@ -1,5 +1,5 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
+using System;
 
 namespace NP.Common.Responses
 {
@@ -7,7 +7,7 @@ namespace NP.Common.Responses
 	/// 
 	/// </summary>
 	[Serializable]
-	public class NotSupportedResponse: IResponse
+	public class NotImplementedResponse : IResponse
 	{
 		/// <inheritdoc />
 		public string Message { get; }
@@ -20,7 +20,7 @@ namespace NP.Common.Responses
 		/// <summary>
 		/// 
 		/// </summary>
-		public NotSupportedResponse() : this(string.Empty)
+		public NotImplementedResponse() : this(string.Empty)
 		{
 
 		}
@@ -29,7 +29,7 @@ namespace NP.Common.Responses
 		/// 
 		/// </summary>
 		/// <param name="message"></param>
-		public NotSupportedResponse(string message) : this(message, string.Empty)
+		public NotImplementedResponse(string message) : this(message, string.Empty)
 		{
 		}
 
@@ -38,7 +38,7 @@ namespace NP.Common.Responses
 		/// </summary>
 		/// <param name="message"></param>
 		/// <param name="resource"></param>
-		public NotSupportedResponse(string message, string resource)
+		public NotImplementedResponse(string message, string resource)
 		{
 			Message = message;
 			Resource = resource;
@@ -46,7 +46,7 @@ namespace NP.Common.Responses
 		/// <inheritdoc />
 		public IResponse<TData> CastTo<TData>(Maybe<TData> data)
 		{
-			return new NotSupportedResponse<TData>(Message, Resource);
+			return new NotImplementedResponse<TData>(Message, Resource);
 		}
 
 		#region Serialization
@@ -56,7 +56,7 @@ namespace NP.Common.Responses
 		/// </summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
-		protected NotSupportedResponse(SerializationInfo info, StreamingContext context)
+		protected NotImplementedResponse(SerializationInfo info, StreamingContext context)
 		{
 			Message = info.GetString(nameof(Message));
 			Resource = info.GetString(nameof(Resource));
@@ -77,12 +77,12 @@ namespace NP.Common.Responses
 	/// 
 	/// </summary>
 	[Serializable]
-	public class NotSupportedResponse<TData> : NotSupportedResponse, IResponse<TData>
+	public class NotImplementedResponse<TData> : NotImplementedResponse, IResponse<TData>
 	{
 		/// <summary>
 		/// 
 		/// </summary>
-		public NotSupportedResponse() : base()
+		public NotImplementedResponse() : base()
 		{
 
 		}
@@ -92,7 +92,7 @@ namespace NP.Common.Responses
 		/// 
 		/// </summary>
 		/// <param name="message"></param>
-		public NotSupportedResponse(string message) : this(message, string.Empty)
+		public NotImplementedResponse(string message) : this(message, string.Empty)
 		{
 
 		}
@@ -102,7 +102,7 @@ namespace NP.Common.Responses
 		/// </summary>
 		/// <param name="message"></param>
 		/// <param name="resource"></param>
-		public NotSupportedResponse(string message, string resource) : base(message, resource)
+		public NotImplementedResponse(string message, string resource) : base(message, resource)
 		{
 		}
 
@@ -113,7 +113,7 @@ namespace NP.Common.Responses
 		/// </summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
-		protected NotSupportedResponse(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected NotImplementedResponse(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 		}
 

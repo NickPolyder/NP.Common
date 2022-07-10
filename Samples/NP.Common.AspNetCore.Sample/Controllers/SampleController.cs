@@ -2,6 +2,7 @@
 using NP.Common.AspNetCore.Extensions;
 using NP.Common.Extensions;
 using NP.Common.Responses;
+using NP.Common.Responses.NP.Common.Responses;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,7 +16,7 @@ namespace NP.Common.AspNetCore.Sample.Controllers
 		[HttpGet]
 		public IActionResult Get()
 		{
-			return new SuccessResponse<string[]>("Get",new string[] { "value1", "value2" }.AsMaybe()).ToActionResult(HttpContext.RequestServices);
+			return new SuccessResponse<string[]>("Get", new string[] { "value1", "value2" }.AsMaybe()).ToActionResult(HttpContext.RequestServices);
 		}
 
 		// GET api/<SampleController>/5
@@ -23,6 +24,23 @@ namespace NP.Common.AspNetCore.Sample.Controllers
 		public IActionResult Get(int id)
 		{
 			return new SuccessResponse<string>($"value for {id}").ToActionResult(HttpContext.RequestServices);
+		}
+
+		// GET api/<SampleController>/5
+		[HttpGet("{id}/content")]
+		public IActionResult GetContent(int id)
+		{
+			var directory = Directory.GetCurrentDirectory();
+			var fileStream = System.IO.File.Open(System.IO.Path.Combine(directory, "Files", "Test.pdf"), FileMode.Open);
+			return new StreamContentResponse<string>($"value for {id}", fileStream, "application/pdf").ToActionResult(HttpContext.RequestServices);
+		}
+
+		// GET api/<SampleController>/5
+		[HttpGet("{id}/bytes")]
+		public IActionResult GetBytes(int id)
+		{
+			var message = $"Text based: value for {id}";
+			return new ByteContentResponse<string>(message, message.ToByteArray(), "plain/text").ToActionResult(HttpContext.RequestServices);
 		}
 
 		// POST api/<SampleController>
